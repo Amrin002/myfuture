@@ -152,6 +152,22 @@
             animation-delay: 0.8s;
         }
 
+        .letter-content p:nth-child(5) {
+            animation-delay: 1.0s;
+        }
+
+        .letter-content p:nth-child(6) {
+            animation-delay: 1.2s;
+        }
+
+        .letter-content p:nth-child(7) {
+            animation-delay: 1.4s;
+        }
+
+        .letter-content p:nth-child(8) {
+            animation-delay: 1.6s;
+        }
+
         @keyframes slideInLeft {
             from {
                 opacity: 0;
@@ -194,12 +210,58 @@
 
         .signature {
             text-align: right;
-            margin-top: 30px;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            border-left: 4px solid #ff6b6b;
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 1s ease-out 1.5s both;
+        }
+
+        .signature-line {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             color: #ff6b6b;
             font-weight: 600;
-            animation: fadeIn 1s ease-out 1.5s both;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .signature-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #ff6b6b;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .signature-message {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .signature-heart {
+            display: inline-block;
+            font-size: 1.2rem;
+            margin-left: 5px;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
         }
 
         @keyframes fadeIn {
@@ -488,6 +550,23 @@
                 font-size: 1rem;
             }
 
+            .signature {
+                padding: 15px;
+                margin-top: 30px;
+            }
+
+            .signature-line {
+                font-size: 1.2rem;
+            }
+
+            .signature-name {
+                font-size: 1.4rem;
+            }
+
+            .signature-message {
+                font-size: 0.85rem;
+            }
+
             .audio-controls {
                 padding: 15px;
             }
@@ -541,14 +620,29 @@
                 ngasih ini dengan sepenuh hati. Bukan buat impress kamu, tapi buat bilang kalau <span
                     class="highlight">kamu itu berarti</span>.</p>
 
-            <p>I just want you to feel special. Because you are. Kalau kamu lihat surat dan kamu baca ini dan senyum
+            <p>I just want you to <span class="highlight">feel special.</span> Because you are. Kalau kamu lihat surat
+                dan kamu baca ini dan senyum
                 sedikit aja, itu udah cukup buat aku bahagia. And maybe just maybe kalau kamu buka sedikit ruang di hati
                 kamu, aku pengen ada di sana, nemenin kamu nggak cuma buat sekarang, tapi untuk waktu yang lama.</p>
+
+            <p>Dan kamu habis ini bakalan berangkat ke brunei buat nerusin kuliah kamu honestly aku pingin banget ketemu
+                kamu sebelum keberangkaan mu yaa kalo bisa sampe ngantar kamu ke bandara to say good bye and <span
+                    class="highlight">hug you</span> if
+                i can sayang nya aku juga gak bisa ke sana karna kamu tahu lah aku kan juga harus nyelesain hal hal yang
+                harus ku selesain juga.</p>
+            <p><span class="highlight">I will always pray you for the best</span>
+                nanti suatu saat kalau aku ada kesempatan aku bakal ke sana buat
+                nemuin kamu entah kapan nya tapi aku bakal usahain sebisa ku semangat untuk kuliah kamu masa depan kamu
+                aku di sini melihat perkembangan hidup mu kalo bisa aku mau nemenin kamu tumbuh kalo boleh xixixi thats
+                all frome me With all the feelings I can't always say out loud,</p>
         </div>
 
         <div class="signature">
-            Dengan cinta,<br>
-            Yang selalu mencintaimu ❤️
+            <div class="signature-name">From Me,</div>
+            <div class="signature-message">
+                Yang diam-diam selalu doain yang terbaik buat kamu
+                <span class="signature-heart">❤️</span>
+            </div>
         </div>
 
         <button class="love-button" onclick="showLove()">💕 Kirim Cinta 💕</button>
