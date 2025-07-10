@@ -24,6 +24,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 20px;
         }
 
         @keyframes warmBackground {
@@ -48,9 +49,10 @@
 
         .envelope-container {
             position: relative;
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             height: 280px;
-            margin: 100px auto;
+            margin: 0 auto;
             animation: floatIn 2s ease-out;
         }
 
@@ -127,8 +129,7 @@
 
         .heart-seal {
             position: absolute;
-            top: -15px;
-            margin-top: 104px;
+            top: 65%;
             left: 50%;
             transform: translateX(-50%);
             width: 40px;
@@ -152,35 +153,35 @@
 
         .envelope-address {
             position: absolute;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
             text-align: center;
             color: #666;
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 12px;
+            line-height: 1.4;
         }
 
         .address-to {
             font-family: 'Dancing Script', cursive;
-            font-size: 18px;
+            font-size: 16px;
             color: #ff6b6b;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
 
         .letter-paper {
             position: absolute;
             top: 60%;
-            left: 20px;
-            right: 20px;
-            height: 200px;
+            left: 15px;
+            right: 15px;
+            height: 180px;
             background: linear-gradient(135deg, #fff 0%, #fffafd 100%);
             border-radius: 8px;
             transform: translateY(0);
             transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -191,7 +192,7 @@
         }
 
         .envelope.opened .letter-paper {
-            transform: translateY(-280px);
+            transform: translateY(-250px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             z-index: 25;
             opacity: 1;
@@ -205,30 +206,32 @@
 
         .letter-title {
             font-family: 'Dancing Script', cursive;
-            font-size: 24px;
+            font-size: 18px;
             color: #ff6b6b;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
         .letter-snippet {
-            font-size: 12px;
-            line-height: 1.5;
+            font-size: 10px;
+            line-height: 1.4;
             color: #666;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .open-button {
             display: inline-block;
-            padding: 8px 16px;
+            padding: 8px 12px;
             background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
             color: white;
             text-decoration: none;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+            border: none;
+            cursor: pointer;
         }
 
         .open-button:hover {
@@ -267,13 +270,14 @@
 
         .instruction {
             position: absolute;
-            bottom: -100px;
+            bottom: -80px;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
             animation: bounce 2s ease-in-out infinite;
+            white-space: nowrap;
         }
 
         @keyframes bounce {
@@ -329,24 +333,147 @@
             }
         }
 
-        @media (max-width: 768px) {
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
             .envelope-container {
-                width: 350px;
-                height: 245px;
-                margin: 30px auto;
+                max-width: 300px;
+                height: 210px;
+            }
+
+            .letter-paper {
+                height: 160px;
+                padding: 12px;
+                left: 10px;
+                right: 10px;
+            }
+
+            .envelope.opened .letter-paper {
+                transform: translateY(-220px);
             }
 
             .letter-title {
-                font-size: 20px;
+                font-size: 16px;
+                margin-bottom: 6px;
             }
 
             .letter-snippet {
-                font-size: 11px;
+                font-size: 9px;
+                margin-bottom: 10px;
+            }
+
+            .open-button {
+                padding: 6px 10px;
+                font-size: 9px;
+            }
+
+            .envelope-address {
+                font-size: 10px;
+                bottom: 15px;
+                left: 15px;
+                right: 15px;
+            }
+
+            .address-to {
+                font-size: 14px;
+                margin-bottom: 4px;
+            }
+
+            .heart-seal {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+                top: 65%;
             }
 
             .instruction {
-                font-size: 13px;
-                bottom: -50px;
+                font-size: 11px;
+                bottom: -60px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .envelope-container {
+                max-width: 280px;
+                height: 200px;
+            }
+
+            .letter-paper {
+                height: 150px;
+                padding: 10px;
+            }
+
+            .envelope.opened .letter-paper {
+                transform: translateY(-200px);
+            }
+
+            .letter-title {
+                font-size: 14px;
+            }
+
+            .letter-snippet {
+                font-size: 8px;
+            }
+
+            .open-button {
+                padding: 5px 8px;
+                font-size: 8px;
+            }
+
+            .envelope-address {
+                font-size: 9px;
+            }
+
+            .address-to {
+                font-size: 12px;
+            }
+
+            .heart-seal {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+                top: 65%;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .envelope-container {
+                margin-top: 20px;
+            }
+
+            .instruction {
+                bottom: -40px;
+            }
+
+            .envelope.opened .letter-paper {
+                transform: translateY(-180px);
+            }
+        }
+
+        /* Touch improvements */
+        @media (hover: none) {
+            .envelope:hover {
+                transform: none;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            }
+
+            .envelope:hover .heart-seal {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            }
+
+            .open-button:hover {
+                transform: none;
+                box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
             }
         }
     </style>
@@ -362,7 +489,7 @@
                     <div class="address-to">To Gloria Monica Feby</div>
                     <div>Hehehe bunganya udah datang ya</div>
                     <div>Surat nya gak cukup makanya aku pakek ini aja</div>
-                    <div style="font-size: 20px;">DI BACA YAA MAKASIH ☺️</div>
+                    <div style="font-size: 18px;">DI BACA YAA MAKASIH ☺️</div>
                 </div>
             </div>
 
@@ -373,12 +500,11 @@
                         "Air mengalir tenang di kali,<br>
                         Disapa angin terasa sejuknya. <br>
                         Bacalah surat ini dengan hati, <br>
-                        Karena tersimpan maksud di dalamnya.
-                        "
+                        Karena tersimpan maksud di dalamnya."
                     </div>
-                    <a href="#" class="open-button" onclick="openFullLetter(event)">
+                    <button class="open-button" onclick="openFullLetter(event)">
                         💕Click di sini yahh buat baca surat nya😁
-                    </a>
+                    </button>
                 </div>
             </div>
 
@@ -439,8 +565,9 @@
 
         function createSparkleEffect() {
             const sparkleContainer = document.getElementById('sparkles');
+            const sparkleCount = window.innerWidth < 480 ? 15 : 30;
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < sparkleCount; i++) {
                 setTimeout(() => {
                     const sparkle = document.createElement('div');
                     sparkle.className = 'sparkle';
@@ -461,8 +588,9 @@
         function createFloatingHearts() {
             const heartsContainer = document.getElementById('floatingHearts');
             const hearts = ['💖', '💕', '💗', '💓', '💝', '💘'];
+            const heartCount = window.innerWidth < 480 ? 6 : 10;
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < heartCount; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'floating-heart';
@@ -480,7 +608,7 @@
             }
         }
 
-        // Auto sparkle effect
+        // Auto sparkle effect dengan optimasi mobile
         setInterval(() => {
             if (Math.random() < 0.3) {
                 const sparkle = document.createElement('div');
@@ -496,29 +624,41 @@
                     sparkle.remove();
                 }, 1500);
             }
-        }, 3000);
+        }, window.innerWidth < 480 ? 4000 : 3000);
 
-        // Mouse trail sparkles
-        let mouseTrailTimeout;
-        document.addEventListener('mousemove', (e) => {
-            clearTimeout(mouseTrailTimeout);
-            mouseTrailTimeout = setTimeout(() => {
-                if (Math.random() < 0.3) {
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    sparkle.style.left = e.clientX + 'px';
-                    sparkle.style.top = e.clientY + 'px';
-                    sparkle.style.width = '3px';
-                    sparkle.style.height = '3px';
+        // Mouse trail sparkles (disabled on mobile for performance)
+        if (window.innerWidth > 480) {
+            let mouseTrailTimeout;
+            document.addEventListener('mousemove', (e) => {
+                clearTimeout(mouseTrailTimeout);
+                mouseTrailTimeout = setTimeout(() => {
+                    if (Math.random() < 0.3) {
+                        const sparkle = document.createElement('div');
+                        sparkle.className = 'sparkle';
+                        sparkle.style.left = e.clientX + 'px';
+                        sparkle.style.top = e.clientY + 'px';
+                        sparkle.style.width = '3px';
+                        sparkle.style.height = '3px';
 
-                    document.getElementById('sparkles').appendChild(sparkle);
+                        document.getElementById('sparkles').appendChild(sparkle);
 
-                    setTimeout(() => {
-                        sparkle.remove();
-                    }, 1500);
-                }
-            }, 50);
-        });
+                        setTimeout(() => {
+                            sparkle.remove();
+                        }, 1500);
+                    }
+                }, 50);
+            });
+        }
+
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 
