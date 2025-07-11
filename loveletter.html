@@ -536,6 +536,48 @@
             }
         }
 
+        .autoplay-notice {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            animation: slideInRight 0.5s ease-out;
+            backdrop-filter: blur(5px);
+        }
+
+        .autoplay-notice.hidden {
+            animation: slideOutRight 0.5s ease-out forwards;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 25px;
@@ -578,6 +620,14 @@
 
             #volumeSlider {
                 width: 100px;
+            }
+
+            .autoplay-notice {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                font-size: 0.8rem;
+                padding: 8px 15px;
             }
         }
     </style>
@@ -649,7 +699,7 @@
 
         <div class="audio-controls">
             <button class="music-button" onclick="toggleMusic()" id="musicBtn">
-                🎵 Putar Musik Romantis <span class="music-note">♪</span>
+                ⏸️ Hentikan Musik <span class="music-note">♪</span>
             </button>
             <div class="volume-control">
                 <span>🔊</span>
@@ -659,110 +709,40 @@
         </div>
     </div>
 
+    <div class="autoplay-notice" id="autoplayNotice">
+        🎵 Musik romantis sedang diputar...
+    </div>
+
     <div class="sparkles" id="sparkles"></div>
 
+    <!-- Audio element untuk musik dengan autoplay -->
+    <audio id="backgroundMusic" loop autoplay preload="auto">
+        <source src="asset/audio/righ-there-waiting-you.mp3" type="audio/mpeg">
+        <source src="asset/audio/righ-there-waiting-you.ogg" type="audio/ogg">
+        <source src="asset/audio/righ-there-waiting-you.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
-        let audioContext;
-        let musicPlaying = false;
-        let currentOscillator = null;
-        let gainNode;
-        let melodyInterval;
+        let musicPlaying = true;
+        const audio = document.getElementById('backgroundMusic');
 
-        // Melodi romantis yang indah (frekuensi dalam Hz)
-        const romanticMelody = [
-            { freq: 523.25, duration: 800 },  // C5
-            { freq: 587.33, duration: 600 },  // D5  
-            { freq: 659.25, duration: 1000 }, // E5
-            { freq: 698.46, duration: 600 },  // F5
-            { freq: 783.99, duration: 1200 }, // G5
-            { freq: 0, duration: 300 },       // Pause
-            { freq: 698.46, duration: 600 },  // F5
-            { freq: 659.25, duration: 800 },  // E5
-            { freq: 587.33, duration: 600 },  // D5
-            { freq: 523.25, duration: 1200 }, // C5
-            { freq: 0, duration: 500 },       // Pause
-            { freq: 440.00, duration: 800 },  // A4
-            { freq: 493.88, duration: 600 },  // B4
-            { freq: 523.25, duration: 1000 }, // C5
-            { freq: 0, duration: 800 },       // Long pause
-        ];
+        // Set initial volume
+        audio.volume = 0.5;
 
-        let melodyIndex = 0;
-
-        function initAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                gainNode = audioContext.createGain();
-                gainNode.connect(audioContext.destination);
-                gainNode.gain.value = 0.5; // Volume 50%
-            }
-        }
-
-        function playNote(frequency, duration) {
-            if (frequency === 0) {
-                // Pause - tidak ada suara
-                return;
-            }
-
-            const oscillator = audioContext.createOscillator();
-            const noteGain = audioContext.createGain();
-
-            oscillator.connect(noteGain);
-            noteGain.connect(gainNode);
-
-            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-            oscillator.type = 'sine'; // Suara yang lembut seperti piano
-
-            // Envelope untuk fade in/out yang smooth
-            noteGain.gain.setValueAtTime(0, audioContext.currentTime);
-            noteGain.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.1);
-            noteGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + (duration / 1000) - 0.1);
-
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + duration / 1000);
-
-            return oscillator;
-        }
-
-        function playMelody() {
-            if (!musicPlaying) return;
-
-            const note = romanticMelody[melodyIndex];
-
-            if (note.freq > 0) {
-                currentOscillator = playNote(note.freq, note.duration);
-            }
-
-            melodyIndex = (melodyIndex + 1) % romanticMelody.length;
-
-            // Schedule next note
-            setTimeout(() => {
-                if (musicPlaying) {
-                    playMelody();
-                }
-            }, note.duration);
-        }
-
-        function toggleMusic() {
+        // Fungsi untuk memulai musik secara otomatis
+        function initAutoplay() {
             const button = document.getElementById('musicBtn');
+            const notice = document.getElementById('autoplayNotice');
 
-            if (!musicPlaying) {
-                // Start music
-                initAudioContext();
-
-                if (audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
-
+            // Coba untuk memutar musik
+            audio.play().then(() => {
                 musicPlaying = true;
                 button.innerHTML = '⏸️ Hentikan Musik <span class="music-note">♪</span>';
                 button.classList.add('playing');
 
-                melodyIndex = 0;
-                playMelody();
-
-                // Tambah sparkle saat musik dimulai
-                for (let i = 0; i < 10; i++) {
+                // Buat efek sparkle saat musik dimulai
+                for (let i = 0; i < 15; i++) {
                     setTimeout(() => {
                         const x = Math.random() * window.innerWidth;
                         const y = Math.random() * window.innerHeight;
@@ -770,30 +750,100 @@
                     }, i * 100);
                 }
 
-            } else {
-                // Stop music
+                // Sembunyikan notice setelah 3 detik
+                setTimeout(() => {
+                    notice.classList.add('hidden');
+                    setTimeout(() => {
+                        notice.style.display = 'none';
+                    }, 500);
+                }, 3000);
+
+            }).catch((error) => {
+                console.log('Autoplay failed:', error);
                 musicPlaying = false;
                 button.innerHTML = '🎵 Putar Musik Romantis <span class="music-note">♪</span>';
                 button.classList.remove('playing');
 
-                if (currentOscillator) {
-                    try {
-                        currentOscillator.stop();
-                    } catch (e) {
-                        // Oscillator might already be stopped
+                // Ubah notice jika autoplay gagal
+                notice.innerHTML = '🎵 Klik tombol untuk memutar musik romantis';
+                notice.style.background = 'rgba(255, 152, 0, 0.9)';
+
+                setTimeout(() => {
+                    notice.classList.add('hidden');
+                    setTimeout(() => {
+                        notice.style.display = 'none';
+                    }, 500);
+                }, 5000);
+            });
+        }
+
+        function toggleMusic() {
+            const button = document.getElementById('musicBtn');
+
+            if (!musicPlaying) {
+                // Start music
+                audio.play().then(() => {
+                    musicPlaying = true;
+                    button.innerHTML = '⏸️ Hentikan Musik <span class="music-note">♪</span>';
+                    button.classList.add('playing');
+
+                    // Tambah sparkle saat musik dimulai
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(() => {
+                            const x = Math.random() * window.innerWidth;
+                            const y = Math.random() * window.innerHeight;
+                            createSparkle(x, y);
+                        }, i * 100);
                     }
-                }
+                }).catch((error) => {
+                    console.log('Audio play failed:', error);
+                    alert('Tidak dapat memutar musik. Pastikan file audio tersedia.');
+                });
+
+            } else {
+                // Stop music
+                audio.pause();
+                musicPlaying = false;
+                button.innerHTML = '🎵 Putar Musik Romantis <span class="music-note">♪</span>';
+                button.classList.remove('playing');
             }
         }
 
         function setVolume() {
             const volume = document.getElementById('volumeSlider').value / 100;
             document.getElementById('volumeDisplay').textContent = Math.round(volume * 100) + '%';
-
-            if (gainNode) {
-                gainNode.gain.value = volume;
-            }
+            audio.volume = volume;
         }
+
+        // Event listener untuk ketika musik selesai (jika tidak loop)
+        audio.addEventListener('ended', () => {
+            musicPlaying = false;
+            const button = document.getElementById('musicBtn');
+            button.innerHTML = '🎵 Putar Musik Romantis <span class="music-note">♪</span>';
+            button.classList.remove('playing');
+        });
+
+        // Event listener untuk error handling
+        audio.addEventListener('error', (e) => {
+            console.log('Audio error:', e);
+            const notice = document.getElementById('autoplayNotice');
+            notice.innerHTML = '❌ File audio tidak ditemukan';
+            notice.style.background = 'rgba(255, 0, 0, 0.9)';
+        });
+
+        // Event listener untuk ketika audio berhasil dimuat
+        audio.addEventListener('loadeddata', () => {
+            console.log('Audio loaded successfully');
+        });
+
+        // Event listener untuk tracking play/pause
+        audio.addEventListener('play', () => {
+            console.log('Audio started playing');
+        });
+
+        audio.addEventListener('pause', () => {
+            console.log('Audio paused');
+        });
 
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
@@ -860,6 +910,7 @@
                 }, i * 100);
             }
         }
+
         // Animasi sparkle random
         setInterval(() => {
             if (Math.random() < 0.3) {
@@ -876,14 +927,41 @@
             }
         });
 
-        // Initialize volume display and auto-start music
+        // Initialize saat halaman dimuat
         document.addEventListener('DOMContentLoaded', () => {
             setVolume();
 
-            // Auto-start music setelah halaman dimuat
+            // Preload audio
+            audio.load();
+
+            // Coba autoplay setelah delay singkat untuk memastikan halaman sudah siap
             setTimeout(() => {
-                toggleMusic();
-            }, 1500); // Delay 1.5 detik untuk efek yang lebih smooth
+                initAutoplay();
+            }, 1000);
+        });
+
+        // Fallback untuk browser yang tidak mendukung DOMContentLoaded
+        window.addEventListener('load', () => {
+            if (!musicPlaying) {
+                setTimeout(() => {
+                    initAutoplay();
+                }, 500);
+            }
+        });
+
+        // Tambahan: Coba autoplay ketika user pertama kali berinteraksi dengan halaman
+        let hasUserInteracted = false;
+
+        function handleFirstInteraction() {
+            if (!hasUserInteracted && !musicPlaying) {
+                hasUserInteracted = true;
+                initAutoplay();
+            }
+        }
+
+        // Event listeners untuk deteksi interaksi pertama user
+        ['click', 'touchstart', 'keydown'].forEach(event => {
+            document.addEventListener(event, handleFirstInteraction, { once: true });
         });
     </script>
 </body>
