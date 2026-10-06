@@ -316,6 +316,86 @@
             }
         }
 
+        .memories-section,
+        .video-section {
+            margin-top: 40px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b6b;
+            font-size: 2.1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            color: #777;
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .gallery-card {
+            overflow: hidden;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.16);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 28px rgba(255, 107, 107, 0.24);
+        }
+
+        .gallery-card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 10px 12px 12px;
+            color: #b85b68;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            border-radius: 16px;
+            box-shadow: 0 10px 24px rgba(255, 107, 107, 0.2);
+            background: #fce4ec;
+        }
+
+        .video-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
         .signature {
             text-align: right;
             margin-top: 40px;
@@ -701,6 +781,16 @@
                 font-size: 1rem;
             }
 
+            .memories-section,
+            .video-section {
+                margin-top: 32px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
+            }
+
             .signature {
                 padding: 15px;
                 margin-top: 30px;
@@ -737,6 +827,16 @@
                 left: 10px;
                 font-size: 0.8rem;
                 padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.85rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -807,6 +907,51 @@
         hal yang tak akan pernah berubah: aku selalu mencintaimu, Sella, sepenuh hati, tanpa ragu.</p>
 </div>
 
+        <section class="memories-section" aria-labelledby="memories-title">
+            <div class="section-heading">
+                <h2 class="section-title" id="memories-title">Galeri Kenangan 💕</h2>
+                <p class="section-subtitle">Beberapa momen yang ingin selalu aku simpan</p>
+            </div>
+            <div class="gallery-grid">
+                <figure class="gallery-card">
+                    <img src="asset/gallery/photo-1.jpg" alt="Sebuah awal yang indah" loading="lazy">
+                    <figcaption class="gallery-caption">Sebuah awal yang indah ❤️</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                    <img src="asset/gallery/photo-2.jpg" alt="Momen yang selalu kuingat" loading="lazy">
+                    <figcaption class="gallery-caption">Momen yang selalu kuingat 💕</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                    <img src="asset/gallery/photo-3.jpg" alt="Senyummu favoritku" loading="lazy">
+                    <figcaption class="gallery-caption">Senyummu favoritku 💗</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                    <img src="asset/gallery/photo-4.jpg" alt="Cerita kita" loading="lazy">
+                    <figcaption class="gallery-caption">Cerita kita 🌷</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                    <img src="asset/gallery/photo-5.jpg" alt="Tetap di sini bersamaku" loading="lazy">
+                    <figcaption class="gallery-caption">Tetap di sini bersamaku 💖</figcaption>
+                </figure>
+                <figure class="gallery-card">
+                    <img src="asset/gallery/photo-6.jpg" alt="Untuk masa depan kita" loading="lazy">
+                    <figcaption class="gallery-caption">Untuk masa depan kita ✨</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="video-section" aria-labelledby="video-title">
+            <div class="section-heading">
+                <h2 class="section-title" id="video-title">Sebuah Video Untukmu 🎬</h2>
+                <p class="section-subtitle">Karena ada beberapa hal yang lebih indah jika dilihat bersama</p>
+            </div>
+            <div class="video-wrapper">
+                <!-- Ganti VIDEO_ID dengan ID video YouTube yang sebenarnya. -->
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Video untuk Sella" loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+        </section>
 
         <div class="signature">
             <div class="signature-name">From Me,</div>
